@@ -14,7 +14,7 @@ Run `phonegap plugin install https://github.com/parsonsmatt/WifiWizard.git`. Ple
 
 #### Releases
 
-Run `cordova plugin add com.pylonproducts.wifiwizard`. This will get the latest release of the plugin.
+Run `cordova plugin add com.simplec.wifiwizard`. This will get the latest release of the plugin.
 
 ### Usage from within Cordova/Phonegap:
 

@@ -12,7 +12,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.pylonproducts.wifiwizard;
+package com.simplec.wifiwizard;
 
 import java.util.List;
 
@@ -34,17 +34,6 @@ import android.net.wifi.WifiManager;
 import android.util.Log;
 
 public class WifiWizard extends CordovaPlugin {
-	/************* Definitions to find variables ***************************/
-	private static final String INT_PRIVATE_KEY = "private_key";
-	private static final String INT_PHASE2 = "phase2";
-	private static final String INT_PASSWORD = "password";
-	private static final String INT_IDENTITY = "identity";
-	private static final String INT_EAP = "eap";
-	private static final String INT_CLIENT_CERT = "client_cert";
-	private static final String INT_CA_CERT = "ca_cert";
-	private static final String INT_ANONYMOUS_IDENTITY = "anonymous_identity";
-	final String INT_ENTERPRISEFIELD_NAME = "android.net.wifi.WifiConfiguration$EnterpriseField";
-	/************************************************************************/
 
 	private static final String ADD_NETWORK = "addNetwork";
 	private static final String REMOVE_NETWORK = "removeNetwork";
