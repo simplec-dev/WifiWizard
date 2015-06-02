@@ -284,4 +284,4 @@ window.WifiWizard = {
     }
 };
 
-module.exports = WifiWizard;
+//module.exports = WifiWizard;
