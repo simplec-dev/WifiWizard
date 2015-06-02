@@ -3,14 +3,14 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="com.simplec.wifiwizard"
-	version="0.2.10">
+	version="0.2.11">
 
     <name>WifiWizard</name>
     <description>This plugin allows Phonegap applications to manage Wifi connections.</description>
-	<author>Matt Parsons</author>
+	<author>Doug Nelson</author>
 	<keywords>phonegap,network,wifi</keywords>
     <license>Apache 2.0</license>
-	<repo>https://github.com/parsonsmatt/WifiWizard/</repo>
+	<repo>hhttps://github.com/simplec-dev/WifiWizard.git</repo>
 
 	<asset src="www/WifiWizard.js" target="WifiWizard.js" />
 	
@@ -23,7 +23,6 @@
 		<config-file target="AndroidManifest.xml" parent="/manifest">
 			<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 			<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 		</config-file>
 
 		<config-file target="res/xml/config.xml" parent="/*">

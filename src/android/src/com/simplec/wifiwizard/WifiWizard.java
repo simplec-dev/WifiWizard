@@ -53,6 +53,7 @@ public class WifiWizard extends CordovaPlugin {
 
 	@Override
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+		Log.e(TAG, "WifiWizard: initialize.");
 		super.initialize(cordova, webView);
 		this.wifiManager = (WifiManager) cordova.getActivity().getSystemService(Context.WIFI_SERVICE);
 	}
