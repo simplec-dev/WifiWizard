@@ -149,7 +149,7 @@ public class WifiWizard extends CordovaPlugin {
 				} else {
 					boolean es = wifiManager.saveConfiguration();
 					Log.d("WifiPreference", "saveConfiguration returned " + es);
-					boolean b = wifiManager.enableNetwork(res, true);
+					boolean b = wifiManager.enableNetwork(res, false);
 					Log.d("WifiPreference", "enableNetwork returned " + b);
 
 					if (b) {
@@ -190,7 +190,7 @@ public class WifiWizard extends CordovaPlugin {
 				} else {
 					boolean es = wifiManager.saveConfiguration();
 					Log.d("WifiPreference", "saveConfiguration returned " + es);
-					boolean b = wifiManager.enableNetwork(res, true);
+					boolean b = wifiManager.enableNetwork(res, false);
 					Log.d("WifiPreference", "enableNetwork returned " + b);
 
 					if (b) {
@@ -301,7 +301,7 @@ public class WifiWizard extends CordovaPlugin {
 				} else {
 					boolean es = wifiManager.saveConfiguration();
 					Log.d("WifiPreference", "saveConfiguration returned " + es);
-					boolean b = wifiManager.enableNetwork(res, true);
+					boolean b = wifiManager.enableNetwork(res, false);
 					Log.d("WifiPreference", "enableNetwork returned " + b);
 
 					if (b) {
