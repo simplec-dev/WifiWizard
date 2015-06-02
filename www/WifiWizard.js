@@ -17,7 +17,7 @@
  * This is the interface for the WifiWizard Phonegap plugin.
  */
 
-var WifiWizard = {
+window.WifiWizard = {
 
     /**
      * 	This method formats wifi information into an object for use with the
