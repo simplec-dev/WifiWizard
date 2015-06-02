@@ -191,6 +191,10 @@ window.WifiWizard = {
         }
         cordova.exec(win, fail, 'WifiWizard', 'listNetworks', []);
     },
+    
+    wifiSignalStrength: function(win, fail) {
+        cordova.exec(win, fail, 'WifiWizard', 'wifiSignalStrength', []);
+    },
 
 	/**
 	 *  Hands the list of scanned  networks to the `win` success callback function.

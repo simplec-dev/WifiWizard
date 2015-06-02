@@ -27,8 +27,6 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiConfiguration.KeyMgmt;
-import android.net.wifi.WifiEnterpriseConfig;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
@@ -42,6 +40,7 @@ public class WifiWizard extends CordovaPlugin {
 	private static final String DISCONNECT = "disconnect";
 	private static final String LIST_NETWORKS = "listNetworks";
 	private static final String START_SCAN = "startScan";
+	private static final String SIGNAL_STRENGTH = "wifiSignalStrength";
 	private static final String GET_SCAN_RESULTS = "getScanResults";
 	private static final String GET_CONNECTED_SSID = "getConnectedSSID";
 	private static final String IS_WIFI_ENABLED = "isWifiEnabled";
@@ -62,9 +61,11 @@ public class WifiWizard extends CordovaPlugin {
 	public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
 
 		this.callbackContext = callbackContext;
-
+		 
 		if (action.equals(IS_WIFI_ENABLED)) {
 			return this.isWifiEnabled(callbackContext);
+		} else if (action.equals(SIGNAL_STRENGTH)) {
+			return this.getWifiSignalStrength(callbackContext);
 		} else if (action.equals(SET_WIFI_ENABLED)) {
 			return this.setWifiEnabled(callbackContext, data);
 		} else if (!wifiManager.isWifiEnabled()) {
@@ -603,6 +604,12 @@ public class WifiWizard extends CordovaPlugin {
 		boolean isEnabled = wifiManager.isWifiEnabled();
 		callbackContext.success(isEnabled ? "1" : "0");
 		return isEnabled;
+	}
+	
+	private boolean getWifiSignalStrength(CallbackContext callbackContext) {
+		int linkSpeed = wifiManager.getConnectionInfo().getRssi();
+		callbackContext.success(""+linkSpeed);
+		return true;
 	}
 
 	/**
