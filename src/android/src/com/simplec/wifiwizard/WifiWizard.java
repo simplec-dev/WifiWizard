@@ -172,7 +172,7 @@ public class WifiWizard extends CordovaPlugin {
 				wifi.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
 				wifi.wepTxKeyIndex = 0;
 
-				wifi.wepKeys[0] = "\"" + newPass + "\""; // This is the WEP Password
+				wifi.wepKeys[0] = newPass; // This is the WEP Password
 				wifi.wepTxKeyIndex = 0;
 
 				boolean res1 = wifiManager.setWifiEnabled(true);
