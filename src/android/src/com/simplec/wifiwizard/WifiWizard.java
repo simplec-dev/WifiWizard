@@ -111,7 +111,7 @@ public class WifiWizard extends CordovaPlugin {
 			// data's order for ANY object is 0: ssid, 1: authentication
 			// algorithm,
 			// 2+: authentication information.
-			String newSSID = "\""+data.getString(0)+"\""; // needs to be in quotes
+			String newSSID = data.getString(0); // needs to be in quotes
 			String authType = data.getString(1);
 			String newPass = data.getString(2);
 			boolean isHidden = data.length() > 3 ? data.getBoolean(3) : false;
