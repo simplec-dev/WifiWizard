@@ -14,6 +14,7 @@
  */
 package com.simplec.wifiwizard;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.apache.cordova.CallbackContext;
@@ -171,6 +172,15 @@ public class WifiWizard extends CordovaPlugin {
 				wifi.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
 				wifi.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
 				wifi.wepTxKeyIndex = 0;
+				
+				if (newPass.length()==5 || newPass.length()==13) {
+					newPass = String.format("%040x", new BigInteger(1, newPass.getBytes(/*YOUR_CHARSET?*/)));
+					Log.i("WifiPreference", "wep key converted to " + newPass);
+				} 
+				
+				if (newPass.length()!=10 && newPass.length()!=13) {
+					callbackContext.error(newSSID + " failed to be added.  Invalid key.");
+				}
 
 				wifi.wepKeys[0] = newPass; // This is the WEP Password
 				wifi.wepTxKeyIndex = 0;
