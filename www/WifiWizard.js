@@ -36,7 +36,7 @@ window.WifiWizard = {
             wifiConfig.auth = {
                 algorithm: 'NONE'
             };
-        } else if (algorithm === 'WPA') {
+        } else if (algorithm === 'WPA' || algorithm === 'WEP') {
             wifiConfig.auth = {
                 algorithm : algorithm,
                 password : WifiWizard.formatWifiString(password)
@@ -120,10 +120,14 @@ window.WifiWizard = {
         if (typeof wifi.auth == 'object') {
 
             switch (wifi.auth.algorithm) {
-                case 'WPA':
-                    networkInformation.push('WPA');
-                networkInformation.push(wifi.auth.password);
-                break;
+	            case 'WPA':
+	                networkInformation.push('WPA');
+	            networkInformation.push(wifi.auth.password);
+	            break;
+	            case 'WEP':
+	                networkInformation.push('WEP');
+	            networkInformation.push(wifi.auth.password);
+	            break;
                 case 'NONE':
                     networkInformation.push('NONE');
                 break;
