@@ -164,7 +164,7 @@ public class WifiWizard extends CordovaPlugin {
 				WifiConfiguration wifi = new WifiConfiguration();
 				wifi.SSID = newSSID; // IMP! This should be in Quotes!!
 				wifi.hiddenSSID = isHidden;
-				wifi.status = WifiConfiguration.Status.DISABLED;
+				wifi.status = WifiConfiguration.Status.ENABLED;
 				wifi.priority = 40;
 				wifi.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
 				wifi.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
