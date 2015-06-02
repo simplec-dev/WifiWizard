@@ -36,13 +36,19 @@ window.WifiWizard = {
             wifiConfig.auth = {
                 algorithm: 'NONE'
             };
-        } else if (algorithm === 'WPA' || algorithm === 'WEP') {
+        } else if (algorithm === 'WPA') {
             wifiConfig.auth = {
-                algorithm : algorithm,
-                password : WifiWizard.formatWifiString(password)
-                // Other parameters can be added depending on algorithm.
-            };
-        }
+                    algorithm : algorithm,
+                    password : WifiWizard.formatWifiString(password)
+                    // Other parameters can be added depending on algorithm.
+                };
+        } else if (algorithm === 'WEP') {
+            wifiConfig.auth = {
+                    algorithm : algorithm,
+                    password : password
+                    // Other parameters can be added depending on algorithm.
+                };
+       }
         else if (algorithm === 'New network type') {
             wifiConfig.auth = {
                 algorithm : algorithm

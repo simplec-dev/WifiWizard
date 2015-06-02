@@ -61,7 +61,7 @@ public class WifiWizard extends CordovaPlugin {
 	public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
 
 		this.callbackContext = callbackContext;
-		 
+
 		if (action.equals(IS_WIFI_ENABLED)) {
 			return this.isWifiEnabled(callbackContext);
 		} else if (action.equals(SIGNAL_STRENGTH)) {
@@ -117,7 +117,7 @@ public class WifiWizard extends CordovaPlugin {
 			String newPass = data.getString(2);
 			boolean isHidden = data.length() > 3 ? data.getBoolean(3) : false;
 
-			Log.e(TAG, "AddNetwork:  "+authType+" " + newSSID + "  " + newPass);
+			Log.e(TAG, "AddNetwork:  " + authType + " " + newSSID + "  " + newPass);
 
 			if (authType.equals("WPA")) {
 				WifiConfiguration wifi = new WifiConfiguration();
@@ -139,19 +139,19 @@ public class WifiWizard extends CordovaPlugin {
 				int res = 0;
 				if (wifi.networkId == -1) {
 					res = wifiManager.addNetwork(wifi);
-					Log.e(TAG, newSSID + " successfully add returned "+res);
+					Log.e(TAG, newSSID + " successfully add returned " + res);
 				} else {
 					res = wifiManager.updateNetwork(wifi);
-					Log.e(TAG, newSSID + " successfully update returned "+res);
+					Log.e(TAG, newSSID + " successfully update returned " + res);
 				}
-				if (res<0) {
+				if (res < 0) {
 					callbackContext.error(newSSID + " was not added.");
 				} else {
 					boolean es = wifiManager.saveConfiguration();
 					Log.d("WifiPreference", "saveConfiguration returned " + es);
 					boolean b = wifiManager.enableNetwork(res, true);
 					Log.d("WifiPreference", "enableNetwork returned " + b);
-					
+
 					if (b) {
 						callbackContext.success(newSSID + " successfully added.");
 					} else {
@@ -166,16 +166,14 @@ public class WifiWizard extends CordovaPlugin {
 				wifi.SSID = newSSID; // IMP! This should be in Quotes!!
 				wifi.hiddenSSID = isHidden;
 				wifi.status = WifiConfiguration.Status.ENABLED;
-				wifi.priority = 40;
-				wifi.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-				wifi.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
-				wifi.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-				wifi.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+
 				wifi.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
-				wifi.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
-				wifi.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+				wifi.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+				wifi.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
 				wifi.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
 				wifi.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
+				wifi.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+				wifi.wepTxKeyIndex = 0;
 
 				wifi.wepKeys[0] = newPass; // This is the WEP Password
 				wifi.wepTxKeyIndex = 0;
@@ -185,19 +183,19 @@ public class WifiWizard extends CordovaPlugin {
 				int res = 0;
 				if (wifi.networkId == -1) {
 					res = wifiManager.addNetwork(wifi);
-					Log.e(TAG, newSSID + " successfully add returned "+res);
+					Log.e(TAG, newSSID + " successfully add returned " + res);
 				} else {
 					res = wifiManager.updateNetwork(wifi);
-					Log.e(TAG, newSSID + " successfully update returned "+res);
+					Log.e(TAG, newSSID + " successfully update returned " + res);
 				}
-				if (res<0) {
+				if (res < 0) {
 					callbackContext.error(newSSID + " was not added.");
 				} else {
 					boolean es = wifiManager.saveConfiguration();
 					Log.d("WifiPreference", "saveConfiguration returned " + es);
 					boolean b = wifiManager.enableNetwork(res, true);
 					Log.d("WifiPreference", "enableNetwork returned " + b);
-					
+
 					if (b) {
 						callbackContext.success(newSSID + " successfully added.");
 					} else {
@@ -207,52 +205,83 @@ public class WifiWizard extends CordovaPlugin {
 
 				return true;
 			} else if (authType.equals("EAP")) {/*
-				WifiEnterpriseConfig enterpriseConfig = new WifiEnterpriseConfig();
-				WifiConfiguration wifi = new WifiConfiguration();
-				wifi = new WifiConfiguration();
-				wifi.SSID = newSSID;
-				wifi.hiddenSSID = isHidden;
-				wifi.allowedKeyManagement.set(KeyMgmt.WPA_EAP);
-				wifi.allowedKeyManagement.set(KeyMgmt.IEEE8021X);
-
-				if (newPass.indexOf("/")<0) {
-					callbackContext.error(newSSID + " could not be added. EAP requires username/password format in the password field.");
-				}
-				
-				String userName = newPass.substring(0, newPass.indexOf("/"));
-				String passWord = newPass.substring(newPass.indexOf("/")+1);
-				enterpriseConfig.setIdentity(userName);
-				enterpriseConfig.setPassword(passWord);
-				enterpriseConfig.setEapMethod(WifiEnterpriseConfig.Eap.PEAP);
-				
-				wifi.enterpriseConfig = enterpriseConfig;
-				
-				boolean res1 = wifiManager.setWifiEnabled(true);
-				wifi.networkId = ssidToNetworkId(newSSID);
-				int res = 0;
-				if (wifi.networkId == -1) {
-					res = wifiManager.addNetwork(wifi);
-					Log.e(TAG, newSSID + " successfully add returned "+res);
-				} else {
-					res = wifiManager.updateNetwork(wifi);
-					Log.e(TAG, newSSID + " successfully update returned "+res);
-				}
-				if (res<0) {
-					callbackContext.error(newSSID + " was not added.");
-				} else {
-					boolean es = wifiManager.saveConfiguration();
-					Log.d("WifiPreference", "saveConfiguration returned " + es);
-					boolean b = wifiManager.enableNetwork(res, true);
-					Log.d("WifiPreference", "enableNetwork returned " + b);
-					
-					if (b) {
-						callbackContext.success(newSSID + " successfully added.");
-					} else {
-						callbackContext.error(newSSID + " failed to be added.");
-					}
-				}
-
-				return true;*/
+												 * WifiEnterpriseConfig
+												 * enterpriseConfig = new
+												 * WifiEnterpriseConfig();
+												 * WifiConfiguration wifi = new
+												 * WifiConfiguration(); wifi =
+												 * new WifiConfiguration();
+												 * wifi.SSID = newSSID;
+												 * wifi.hiddenSSID = isHidden;
+												 * wifi
+												 * .allowedKeyManagement.set(
+												 * KeyMgmt.WPA_EAP);
+												 * wifi.allowedKeyManagement
+												 * .set(KeyMgmt.IEEE8021X);
+												 * 
+												 * if (newPass.indexOf("/")<0) {
+												 * callbackContext.error(newSSID
+												 * +
+												 * " could not be added. EAP requires username/password format in the password field."
+												 * ); }
+												 * 
+												 * String userName =
+												 * newPass.substring(0,
+												 * newPass.indexOf("/")); String
+												 * passWord =
+												 * newPass.substring(newPass
+												 * .indexOf("/")+1);
+												 * enterpriseConfig
+												 * .setIdentity(userName);
+												 * enterpriseConfig
+												 * .setPassword(passWord);
+												 * enterpriseConfig
+												 * .setEapMethod(
+												 * WifiEnterpriseConfig
+												 * .Eap.PEAP);
+												 * 
+												 * wifi.enterpriseConfig =
+												 * enterpriseConfig;
+												 * 
+												 * boolean res1 =
+												 * wifiManager.setWifiEnabled
+												 * (true); wifi.networkId =
+												 * ssidToNetworkId(newSSID); int
+												 * res = 0; if (wifi.networkId
+												 * == -1) { res =
+												 * wifiManager.addNetwork(wifi);
+												 * Log.e(TAG, newSSID +
+												 * " successfully add returned "
+												 * +res); } else { res =
+												 * wifiManager
+												 * .updateNetwork(wifi);
+												 * Log.e(TAG, newSSID +
+												 * " successfully update returned "
+												 * +res); } if (res<0) {
+												 * callbackContext.error(newSSID
+												 * + " was not added."); } else
+												 * { boolean es =
+												 * wifiManager.saveConfiguration
+												 * (); Log.d("WifiPreference",
+												 * "saveConfiguration returned "
+												 * + es); boolean b =
+												 * wifiManager
+												 * .enableNetwork(res, true);
+												 * Log.d("WifiPreference",
+												 * "enableNetwork returned " +
+												 * b);
+												 * 
+												 * if (b) {
+												 * callbackContext.success
+												 * (newSSID +
+												 * " successfully added."); }
+												 * else {
+												 * callbackContext.error(newSSID
+												 * + " failed to be added."); }
+												 * }
+												 * 
+												 * return true;
+												 */
 				return false;
 			} else if (authType.equals("NONE")) {
 				WifiConfiguration wifi = new WifiConfiguration();
@@ -265,26 +294,26 @@ public class WifiWizard extends CordovaPlugin {
 				int res = 0;
 				if (wifi.networkId == -1) {
 					res = wifiManager.addNetwork(wifi);
-					Log.e(TAG, newSSID + " successfully add returned "+res);
+					Log.e(TAG, newSSID + " successfully add returned " + res);
 				} else {
 					res = wifiManager.updateNetwork(wifi);
-					Log.e(TAG, newSSID + " successfully update returned "+res);
+					Log.e(TAG, newSSID + " successfully update returned " + res);
 				}
-				if (res<0) {
+				if (res < 0) {
 					callbackContext.error(newSSID + " was not added.");
 				} else {
 					boolean es = wifiManager.saveConfiguration();
 					Log.d("WifiPreference", "saveConfiguration returned " + es);
 					boolean b = wifiManager.enableNetwork(res, true);
 					Log.d("WifiPreference", "enableNetwork returned " + b);
-					
+
 					if (b) {
 						callbackContext.success(newSSID + " successfully added.");
 					} else {
 						callbackContext.error(newSSID + " failed to be added.");
 					}
 				}
-				
+
 				return true;
 			}
 			// TODO: Add more authentications as necessary
@@ -605,10 +634,10 @@ public class WifiWizard extends CordovaPlugin {
 		callbackContext.success(isEnabled ? "1" : "0");
 		return isEnabled;
 	}
-	
+
 	private boolean getWifiSignalStrength(CallbackContext callbackContext) {
 		int linkSpeed = wifiManager.getConnectionInfo().getRssi();
-		callbackContext.success(""+linkSpeed);
+		callbackContext.success("" + linkSpeed);
 		return true;
 	}
 
