@@ -167,15 +167,12 @@ public class WifiWizard extends CordovaPlugin {
 				wifi.hiddenSSID = isHidden;
 				wifi.status = WifiConfiguration.Status.ENABLED;
 
-				wifi.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
-				wifi.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-				wifi.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
 				wifi.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
 				wifi.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
 				wifi.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
 				wifi.wepTxKeyIndex = 0;
 
-				wifi.wepKeys[0] = newPass; // This is the WEP Password
+				wifi.wepKeys[0] = "\"" + newPass + "\""; // This is the WEP Password
 				wifi.wepTxKeyIndex = 0;
 
 				boolean res1 = wifiManager.setWifiEnabled(true);
