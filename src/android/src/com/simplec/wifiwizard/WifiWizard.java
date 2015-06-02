@@ -204,7 +204,7 @@ public class WifiWizard extends CordovaPlugin {
 				}
 
 				return true;
-			} else if (authType.equals("EAP")) {
+			} else if (authType.equals("EAP")) {/*
 				WifiEnterpriseConfig enterpriseConfig = new WifiEnterpriseConfig();
 				WifiConfiguration wifi = new WifiConfiguration();
 				wifi = new WifiConfiguration();
@@ -250,7 +250,8 @@ public class WifiWizard extends CordovaPlugin {
 					}
 				}
 
-				return true;
+				return true;*/
+				return false;
 			} else if (authType.equals("NONE")) {
 				WifiConfiguration wifi = new WifiConfiguration();
 
