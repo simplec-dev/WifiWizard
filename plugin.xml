@@ -2,7 +2,7 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	id="com.pylonproducts.wifiwizard"
+	id="com.simplec.wifiwizard"
 	version="0.2.8">
 
     <name>WifiWizard</name>
@@ -23,6 +23,7 @@
 		<config-file target="AndroidManifest.xml" parent="/manifest">
 			<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 			<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 		</config-file>
 
 		<config-file target="res/xml/config.xml" parent="/*">
